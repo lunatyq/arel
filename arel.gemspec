@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "arel"
-  s.version = "4.0.0.20130418133826"
+  s.version = "4.0.0.20130418133826.is"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aaron Patterson", "Bryan Halmkamp", "Emilio Tagua", "Nick Kallen"]

@@ -77,6 +77,8 @@ module Arel
       alias :visit_Arel_Nodes_LessThanOrEqual    :binary
       alias :visit_Arel_Nodes_Matches            :binary
       alias :visit_Arel_Nodes_NotEqual           :binary
+      alias :visit_Arel_Nodes_Is                 :binary
+      alias :visit_Arel_Nodes_IsNot              :binary
       alias :visit_Arel_Nodes_NotIn              :binary
       alias :visit_Arel_Nodes_Or                 :binary
       alias :visit_Arel_Nodes_OuterJoin          :binary

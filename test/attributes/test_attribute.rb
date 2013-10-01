@@ -3,6 +3,94 @@ require 'helper'
 module Arel
   module Attributes
     describe 'attribute' do
+
+      describe '#is' do
+        it 'should create a Is node' do
+          relation = Table.new(:users)
+          relation[:id].is(10).must_be_kind_of Nodes::Is
+        end
+
+        it 'should generate IS in sql for true' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is(true)
+           mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" IS TRUE
+          }
+        end
+
+        it 'should generate IS in sql for nil' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is(nil)
+           mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" IS NULL
+          }
+        end
+
+        it 'should generate IS in sql for false' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is(false)
+           mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" IS FALSE
+          }
+        end
+
+
+        it 'should generate = in sql for others' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is(10)
+          mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" = 10
+          }
+        end
+      end
+
+      describe '#is_not' do
+        it 'should create a IsNot node' do
+          relation = Table.new(:users)
+          relation[:id].is_not(10).must_be_kind_of Nodes::IsNot
+        end
+
+        it 'should generate IS NOT in sql for true' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is_not(true)
+           mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" IS NOT TRUE
+          }
+        end
+
+        it 'should generate IS NOT in sql for nil' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is_not(nil)
+           mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" IS NOT NULL
+          }
+        end
+
+        it 'should generate IS NOT in sql for false' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is_not(false)
+           mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" IS NOT FALSE
+          }
+        end
+
+        it 'should generate != in sql for others' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id]
+          mgr.where relation[:id].is_not(10)
+          mgr.to_sql.must_be_like %{
+            SELECT "users"."id" FROM "users" WHERE "users"."id" != 10
+          }
+        end
+      end
+
       describe '#not_eq' do
         it 'should create a NotEqual node' do
           relation = Table.new(:users)

@@ -533,6 +533,39 @@ key on UpdateManager using UpdateManager#key=
         end
       end
 
+      def visit_Arel_Nodes_Is o, a
+        right = o.right
+
+        a = o.left if Arel::Attributes::Attribute === o.left
+        case right
+        when true
+          "#{visit o.left, a} IS TRUE"
+        when false
+          "#{visit o.left, a} IS FALSE"
+        when nil
+          "#{visit o.left, a} IS NULL"
+        else
+          "#{visit o.left, a} = #{visit right, a}"
+        end
+      end
+
+      def visit_Arel_Nodes_IsNot o, a
+        right = o.right
+
+        a = o.left if Arel::Attributes::Attribute === o.left
+        case right
+        when true
+          "#{visit o.left, a} IS NOT TRUE"
+        when false
+          "#{visit o.left, a} IS NOT FALSE"
+        when nil
+          "#{visit o.left, a} IS NOT NULL"
+        else
+          "#{visit o.left, a} != #{visit right, a}"
+        end
+      end
+
+
       def visit_Arel_Nodes_As o, a
         "#{visit o.left, a} AS #{visit o.right, a}"
       end
